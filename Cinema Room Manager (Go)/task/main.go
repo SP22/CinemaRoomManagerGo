@@ -6,19 +6,21 @@ func main() {
 	rows := 7
 	cols := 8
 
-	fmt.Println("Cinema:")
-	fmt.Print("  ")
-	for c := 1; c <= cols; c++ {
-		fmt.Printf("%d ", c)
-	}
-	fmt.Println()
+	fmt.Println("Enter the number of rows:")
+	fmt.Scan(&rows)
+	fmt.Println("Enter the number of seats in each row:")
+	fmt.Scan(&cols)
 
-	for r := 1; r <= rows; r++ {
-		fmt.Printf("%d ", r)
-		for c := 1; c <= cols; c++ {
-			fmt.Print("S ")
-		}
-		fmt.Println()
-	}
+	seats := rows * cols
+	income := 0
 
+	if seats <= 60 {
+		income = seats * 10
+	} else {
+		firstHalf := rows / 2
+		secondHalf := rows - firstHalf
+		income = cols * (firstHalf*10 + secondHalf*8)
+	}
+	fmt.Println("Total income:\n")
+	fmt.Printf("$%d", income)
 }
