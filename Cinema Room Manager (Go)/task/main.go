@@ -34,31 +34,48 @@ func main() {
 		}
 	}
 
-	printSeating(cinema)
+	for {
+		fmt.Println("1. Show the seats")
+		fmt.Println("2. Buy a ticket")
+		fmt.Println("0. Exit")
+		var choice int
+		fmt.Scan(&choice)
 
-	// Get seat selection
-	var rowNumber, seatNumber int
-	fmt.Println("Enter a row number:")
-	fmt.Scan(&rowNumber)
-	fmt.Println("Enter a seat number in that row:")
-	fmt.Scan(&seatNumber)
+		switch choice {
+		case 1:
+			printSeating(cinema)
+		case 2:
+			var rowNumber, seatNumber int
+			fmt.Println("Enter a row number:")
+			fmt.Scan(&rowNumber)
+			fmt.Println("Enter a seat number in that row:")
+			fmt.Scan(&seatNumber)
 
-	totalSeats := rows * seats
-	var ticketPrice int
+			if cinema[rowNumber-1][seatNumber-1] == 'B' {
+				fmt.Println("The ticket has already been purchased!")
+				continue
+			}
 
-	if totalSeats <= 60 {
-		ticketPrice = 10
-	} else {
-		firstHalf := rows / 2
-		if rowNumber <= firstHalf {
-			ticketPrice = 10
-		} else {
-			ticketPrice = 8
+			totalSeats := rows * seats
+			var ticketPrice int
+
+			if totalSeats <= 60 {
+				ticketPrice = 10
+			} else {
+				firstHalf := rows / 2
+				if rowNumber <= firstHalf {
+					ticketPrice = 10
+				} else {
+					ticketPrice = 8
+				}
+			}
+			fmt.Printf("Ticket price: $%d\n", ticketPrice)
+
+			cinema[rowNumber-1][seatNumber-1] = 'B'
+		case 0:
+			return
+		default:
+			fmt.Println("Invalid option, please choose again.")
 		}
 	}
-	fmt.Printf("Ticket price: $%d\n", ticketPrice)
-
-	cinema[rowNumber-1][seatNumber-1] = 'B'
-
-	printSeating(cinema)
 }
